@@ -1,7 +1,7 @@
 print("WL LOADED")
 
 
-local i = {0,0}
+local i = {940627351,0}
 local n = {"name",0}
 
 local id = game.Players.LocalPlayer.UserId
