@@ -2,7 +2,7 @@ print("WL LOADED")
 
 
 local i = {940627351,0}
-local n = {"name",0}
+local n = {"Sagevrty",0}
 
 local id = game.Players.LocalPlayer.UserId
 local un = game.Players.LocalPlayer.Name
