@@ -926,7 +926,7 @@ end))
 
 ------// Auto Start \\------
 coroutine.resume(coroutine.create(function()
-    while task.wait() do
+    while task.wait(6) do
         if getgenv().autostart and getgenv().AutoFarm then
             if game.PlaceId == 8304191830 then
                 for i, v in pairs(game:GetService("Workspace")["_LOBBIES"].Story:GetDescendants()) do
@@ -962,7 +962,7 @@ coroutine.resume(coroutine.create(function()
                 }
 
                 game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))
-                task.wait()
+                task.wait(1)
             end
         end
     end
