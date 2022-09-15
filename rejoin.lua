@@ -67,4 +67,8 @@ function Teleport()
     end
 end
 
-Teleport()
+while true and task.wait() do
+     Teleport()
+end
+
+
