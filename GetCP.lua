@@ -61,7 +61,7 @@ getgenv().getClosestPlayer = function(Part,TeamCheck,Raidus,VisCheck)
         local Humanoid = FindFirstChild(Character, "Humanoid")
         if not HumanoidRootPart or not Humanoid or Humanoid and Humanoid.Health <= 0 then continue end
 
-        local ScreenPosition, OnScreen = getPositionOnScreen(HumanoidRootPart.Position)
+        local ScreenPosition, OnScreen = Camera.WorldToViewportPoint(Camera, HumanoidRootPart.Position) --getPositionOnScreen(HumanoidRootPart.Position)
         if not OnScreen then continue end
 
         local Distance = (getMousePosition() - ScreenPosition).Magnitude
