@@ -7,7 +7,6 @@ local GetPlayers = Players.GetPlayers
 local WorldToScreen = Camera.WorldToScreenPoint
 local WorldToViewportPoint = Camera.WorldToViewportPoint
 local GetPartsObscuringTarget = Camera.GetPartsObscuringTarget
-local FindFirstChild = game.FindFirstChild
 local UserInputService = game:GetService("UserInputService")
 local GetMouseLocation = UserInputService.GetMouseLocation
 local ValidTargetParts = {"Head", "HumanoidRootPart"}
@@ -51,8 +50,8 @@ getgenv().getClosestPlayer = function(TeamCheck,Raidus)
             if TeamCheck and Player.Team == LocalPlayer.Team then continue end
 
             local Character = Player.Character
-            local HumanoidRootPart = FindFirstChild(Character, "HumanoidRootPart")
-            local Humanoid = FindFirstChild(Character, "Humanoid")
+            local HumanoidRootPart = Character:FindFirstChild("HumanoidRootPart")
+            local Humanoid = Character:FindFirstChild("Humanoid")
 
             if not HumanoidRootPart or not Humanoid or Humanoid and Humanoid.Health <= 0 then continue end
 
