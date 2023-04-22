@@ -4585,7 +4585,7 @@ function library:init()
 
         function self.watermark:Update()
             self.objects.background.Visible = library.flags.watermark_enabled
-            if false then
+            if library.flags.watermark_enabled then
                 local date = {os.date('%b',os.time()), os.date('%d',os.time()), os.date('%Y',os.time())}
                 local daySuffix = math.floor(date[2]%10)
                 date[2] = date[2]..(daySuffix == 1 and 'st' or daySuffix == 2 and 'nd' or daySuffix == 3 and 'rd' or 'th')
@@ -4785,12 +4785,12 @@ function library:CreateSettingsTab(menu)
 
     mainSection:AddSeparator({text = 'Indicators'});
 
-    mainSection:AddToggle({text = 'Watermark', flag = 'watermark_enabled', state = false,});
+    mainSection:AddToggle({text = 'Watermark', flag = 'watermark_enabled', state = true,});
 
     mainSection:AddSlider({text = 'Custom X', flag = 'watermark_x', suffix = '%', min = 0, max = 100, increment = .1, value = 6});
     mainSection:AddSlider({text = 'Custom Y', flag = 'watermark_y', suffix = '%', min = 0, max = 100, increment = .1, value = 1});
 
-    mainSection:AddToggle({text = 'Keybinds', flag = 'keybind_indicator', state = false, callback = function(bool)
+    mainSection:AddToggle({text = 'Keybinds', flag = 'keybind_indicator', state = true, callback = function(bool)
         library.keyIndicator:SetEnabled(bool);
     end})
     mainSection:AddSlider({text = 'Position X', flag = 'keybind_indicator_x', min = 0, max = 100, increment = .1, value = .5, callback = function()
