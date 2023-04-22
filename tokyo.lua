@@ -4585,7 +4585,40 @@ function library:init()
 
         function self.watermark:Update()
             self.objects.background.Visible = library.flags.watermark_enabled
-            
+            if false then
+                local date = {os.date('%b',os.time()), os.date('%d',os.time()), os.date('%Y',os.time())}
+                local daySuffix = math.floor(date[2]%10)
+                date[2] = date[2]..(daySuffix == 1 and 'st' or daySuffix == 2 and 'nd' or daySuffix == 3 and 'rd' or 'th')
+
+                self.text[4][1] = library.stats.fps..' fps'
+                self.text[5][1] = floor(library.stats.ping)..'ms'
+                self.text[6][1] = os.date('%X', os.time())
+                self.text[7][1] = table.concat(date, ', ')
+
+                local text = {};
+                for _,v in next, self.text do
+                    if v[2] then
+                        table.insert(text, v[1]);
+                    end
+                end
+
+                self.objects.text.Text = table.concat(text,' | ')
+                self.objects.background.Size = newUDim2(0, self.objects.text.TextBounds.X + 10, 0, 17)
+
+                local size = self.objects.background.Object.Size;
+                local screensize = workspace.CurrentCamera.ViewportSize;
+
+                self.position = (
+                    self.lock == 'Top Right' and newUDim2(0, screensize.X - size.X - 15, 0, 15) or
+                    self.lock == 'Top Left' and newUDim2(0, 15, 0, 15) or
+                    self.lock == 'Bottom Right' and newUDim2(0, screensize.X - size.X - 15, 0, screensize.Y - size.Y - 15) or
+                    self.lock == 'Bottom Left' and newUDim2(0, 15, 0, screensize.Y - size.Y - 15) or
+                    self.lock == 'Top' and newUDim2(0, screensize.X / 2 - size.X / 2, 0, 15) or
+                    newUDim2(library.flags.watermark_x / 100, 0, library.flags.watermark_y / 100, 0)
+                )
+
+                self.objects.background.Position = self.position
+            end
         end
 
         do
@@ -4760,7 +4793,6 @@ function library:CreateSettingsTab(menu)
     mainSection:AddToggle({text = 'Keybinds', flag = 'keybind_indicator', state = false, callback = function(bool)
         library.keyIndicator:SetEnabled(bool);
     end})
-
     mainSection:AddSlider({text = 'Position X', flag = 'keybind_indicator_x', min = 0, max = 100, increment = .1, value = .5, callback = function()
         library.keyIndicator:SetPosition(newUDim2(library.flags.keybind_indicator_x / 100, 0, library.flags.keybind_indicator_y / 100, 0));    
     end});
