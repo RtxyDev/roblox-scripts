@@ -1,4 +1,4 @@
-
+repeat task.wait() until game:IsLoaded()
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 local Mouse = LocalPlayer:GetMouse()
@@ -22,7 +22,7 @@ getgenv().getClosestPlayer = function(TeamCheck,Raidus)
             if not HumanoidRootPart or not Humanoid or Humanoid and Humanoid.Health <= 0 then continue end
 
             if Character and Humanoid.Health > 1 then
-                local ScreenPosition, IsVisibleOnViewPort = Camera:WorldToViewportPoint(HumanoidRootPart.Position)
+                local ScreenPosition, IsVisibleOnViewPort = Camera.WorldToViewportPoint(Camera,HumanoidRootPart.Position)
                 if IsVisibleOnViewPort then
                     local MDistance = (Vector2.new(Mouse.X, Mouse.Y) - Vector2.new(ScreenPosition.X, ScreenPosition.Y)).Magnitude
                     if MDistance < ClosestDistance then
