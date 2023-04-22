@@ -11,6 +11,7 @@ local FindFirstChild = game.FindFirstChild
 local UserInputService = game:GetService("UserInputService")
 local GetMouseLocation = UserInputService.GetMouseLocation
 local ValidTargetParts = {"Head", "HumanoidRootPart"}
+
 local function IsPlayerVisible(Player,Part)
     local PlayerCharacter = Player.Character
     local LocalPlayerCharacter = LocalPlayer.Character
@@ -39,37 +40,34 @@ end
 
 
 
-getgenv().getClosestPlayer = function(Part,TeamCheck,Raidus,VisCheck)
-    Part = Part or "Head"
+getgenv().getClosestPlayer = function(TeamCheck,Raidus)
     TeamCheck = TeamCheck or false
     Raidus = Raidus or 1/0
-    VisCheck = VisCheck or true
 
-    local Closest
-    local DistanceToMouse
-  
-    for _, Player in next, GetPlayers(Players) do
-        if Player == LocalPlayer then continue end
-        if TeamCheck and Player.Team == LocalPlayer.Team then continue end
+    local ClosestDistance, ClosestPlayer = Raidus, nil;
+    for _, Player in next, game:GetService("Players"):GetPlayers() do
+        if Player ~= LocalPlayer then
+            
+            if TeamCheck and Player.Team == LocalPlayer.Team then continue end
 
-        local Character = Player.Character
-        if not Character then continue end
-        
-        if VisCheck and not IsPlayerVisible(Player,Part) then continue end
+            local Character = Player.Character
+            local HumanoidRootPart = FindFirstChild(Character, "HumanoidRootPart")
+            local Humanoid = FindFirstChild(Character, "Humanoid")
 
-        local HumanoidRootPart = FindFirstChild(Character, "HumanoidRootPart")
-        local Humanoid = FindFirstChild(Character, "Humanoid")
-        if not HumanoidRootPart or not Humanoid or Humanoid and Humanoid.Health <= 0 then continue end
+            if not HumanoidRootPart or not Humanoid or Humanoid and Humanoid.Health <= 0 then continue end
 
-        local ScreenPosition, OnScreen = Camera.WorldToViewportPoint(Camera, HumanoidRootPart.Position) --getPositionOnScreen(HumanoidRootPart.Position)
-        if not OnScreen then continue end
-
-        local Distance = (getMousePosition() - ScreenPosition).Magnitude
-        if Distance <= (DistanceToMouse or Raidus or 2000) then
-            Closest = ((Part == "Random" and Character[ValidTargetParts[math.random(1, #ValidTargetParts)]]) or Character[Part])
-            DistanceToMouse = Distance
+            if Character and Humanoid.Health > 1 then
+                local ScreenPosition, IsVisibleOnViewPort = Camera:WorldToViewportPoint(HumanoidRootPart.Position)
+                if IsVisibleOnViewPort then
+                    local MDistance = (Vector2.new(Mouse.X, Mouse.Y) - Vector2.new(ScreenPosition.X, ScreenPosition.Y)).Magnitude
+                    if MDistance < ClosestDistance then
+                        ClosestPlayer = Player
+                        ClosestDistance = MDistance
+                    end
+                end
+            end
         end
     end
-    return Closest
+    return ClosestPlayer
   
 end
