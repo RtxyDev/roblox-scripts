@@ -1766,7 +1766,7 @@ end
 function OrionLib:CreateRoFluxPage(Menu)
     local RoFluxTab = Menu:MakeTab({
         Name = "INFO",
-        Icon = "rbxassetid://4483345998",
+        Icon = "rbxassetid://12413792680",
         PremiumOnly = false
     })
     local request = ((syn and syn.request) or (http and http.request) or http_request or request)
