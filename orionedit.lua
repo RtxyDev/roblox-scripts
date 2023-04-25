@@ -1765,7 +1765,7 @@ end
 
 function OrionLib:CreateRoFluxPage(Menu)
     local RoFluxTab = Menu:MakeTab({
-        Name = "Home",
+        Name = "INFO",
         Icon = "rbxassetid://4483345998",
         PremiumOnly = false
     })
@@ -1787,6 +1787,8 @@ function OrionLib:CreateRoFluxPage(Menu)
         Image = "rbxassetid://4483345998",
         Time = 99
     })
+
+    setclipboard("https://discord.gg/"..tostring(CurrentDiscord))
 
     
 
@@ -1834,20 +1836,6 @@ function OrionLib:CreateRoFluxPage(Menu)
     CreditSection:AddParagraph("Sealboy","Founder")
     CreditSection:AddParagraph("Rtxyy","Co Founder")
     
-    
-    CreditSection:AddButton({
-        Name = "Join Our Discord",
-        Callback = function()
-            setclipboard("https://roflux.net/discord")
-            OrionLib:MakeNotification({
-                Name = "IMPORTANT!",
-                Content = "Discord Copied to clipboard",
-                Image = "rbxassetid://4483345998",
-                Time = 55
-            })
-          end    
-    })
-
     
 
 end
